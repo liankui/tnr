@@ -67,8 +67,22 @@ func (s catsServer) CreateCat(ctx context.Context, in *pb.CreateCatRequest) (*ca
 func (s catsServer) UpdateCat(ctx context.Context, in *pb.UpdateCatRequest) (*cat.Cat, error) {
 	logs.Infow("UpdateCat", "request", in)
 
+	if in.Cat.Id == "" {
+		logs.Warnw("need to set the id")
+		return nil, core.NewErrorFrom(400, "need to set the id")
+	}
+
+	if in.Cat.UpdateTime == nil {
+		in.Cat.UpdateTime = core.Now()
+	}
+
+	if _, err := model.GetCatModel().Update(ctx, in.Cat); err != nil {
+		logs.Warnw("failed to update cat model", "error", err)
+		return nil, core.NewErrorFrom(500, fmt.Sprintf("update cat model error: %v", err))
+	}
+
 	resp := &cat.Cat{
-		// Id:
+		Id: in.Cat.Id,
 		// Name:
 		// NickName:
 		// Sex:
@@ -87,17 +101,28 @@ func (s catsServer) UpdateCat(ctx context.Context, in *pb.UpdateCatRequest) (*ca
 func (s catsServer) GetCat(ctx context.Context, in *pb.GetCatRequest) (*cat.Cat, error) {
 	logs.Infow("GetCat", "request", in)
 
+	if in.Id == "" {
+		logs.Warnw("need to set the id")
+		return nil, core.NewErrorFrom(400, "need to set the id")
+	}
+
+	c, err := model.GetCatModel().Get(ctx, in.Id)
+	if err != nil {
+		logs.Warnw("failed to get the cat", "id", in.Id, "error", err)
+		return nil, core.NewErrorFrom(500, fmt.Sprintf("not found the cat, error: %v", err))
+	}
+
 	resp := &cat.Cat{
-		// Id:
-		// Name:
-		// NickName:
-		// Sex:
-		// Location:
-		// Area:
-		// Status:
-		// State:
-		// CreateTime:
-		// UpdateTime:
+		Id:         c.Id,
+		Name:       c.Name,
+		NickName:   c.NickName,
+		Sex:        c.Sex,
+		Location:   c.Location,
+		Area:       c.Area,
+		Status:     c.Status,
+		State:      c.State,
+		CreateTime: c.CreateTime,
+		UpdateTime: c.UpdateTime,
 		// DeleteTime:
 	}
 	return resp, nil
@@ -107,8 +132,14 @@ func (s catsServer) GetCat(ctx context.Context, in *pb.GetCatRequest) (*cat.Cat,
 func (s catsServer) ListCats(ctx context.Context, in *pb.ListCatsRequest) (*pb.ListCatsResponse, error) {
 	logs.Infow("ListCats", "request", in)
 
+	cats, err := model.GetCatModel().List(ctx, "")
+	if err != nil {
+		logs.Warnw("failed to get the cats", "error", err)
+		return nil, core.NewErrorFrom(500, fmt.Sprintf("not found the cats, error: %v", err))
+	}
+
 	resp := &pb.ListCatsResponse{
-		// Cats:
+		Cats: cats,
 		// TotalCount:
 		// NextPageToken:
 	}
@@ -119,8 +150,19 @@ func (s catsServer) ListCats(ctx context.Context, in *pb.ListCatsRequest) (*pb.L
 func (s catsServer) BatchGetCat(ctx context.Context, in *pb.BatchGetCatRequest) (*pb.BatchGetCatResponse, error) {
 	logs.Infow("BatchGetCat", "request", in)
 
+	if len(in.Ids) == 0 {
+		logs.Warnw("need to set the ids")
+		return nil, core.NewErrorFrom(400, "need to set the ids")
+	}
+
+	cats, err := model.GetCatModel().BatchGet(ctx, in.Ids...)
+	if err != nil {
+		logs.Warnw("failed to get the cats from ids", "ids", in.Ids, "error", err)
+		return nil, core.NewErrorFrom(500, fmt.Sprintf("not found the cats, error: %v", err))
+	}
+
 	resp := &pb.BatchGetCatResponse{
-		// Cats:
+		Cats: cats,
 	}
 	return resp, nil
 }
@@ -128,6 +170,16 @@ func (s catsServer) BatchGetCat(ctx context.Context, in *pb.BatchGetCatRequest) 
 // DeleteCat implements Interface.
 func (s catsServer) DeleteCat(ctx context.Context, in *pb.DeleteCatRequest) (*core.Null, error) {
 	logs.Infow("DeleteCat", "request", in)
+
+	if in.Id == "" {
+		logs.Warnw("need to set the id")
+		return nil, core.NewErrorFrom(400, "need to set the id")
+	}
+
+	if _, err := model.GetCatModel().Delete(ctx, in.Id); err != nil {
+		logs.Warnw("failed to delete the cat", "id", in.Id, "error", err)
+		return nil, core.NewErrorFrom(500, fmt.Sprintf("not delete the cat, error: %v", err))
+	}
 
 	resp := &core.Null{}
 	return resp, nil

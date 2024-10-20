@@ -7,7 +7,6 @@ import (
 	"github.com/chaos-io/chaos/db"
 	"github.com/chaos-io/chaos/logs"
 	"github.com/mojo-lang/core/go/pkg/mojo/core"
-
 	"github.com/segmentio/ksuid"
 
 	"github.com/liankui/tnr/go/pkg/cat"
@@ -74,9 +73,11 @@ func (m *CatModel) List(ctx context.Context, filter string, condition ...string)
 	var cat []*cat.Cat
 
 	tx := m.DB.WithContext(ctx)
-	// todo add condition
+	if filter != "" {
+		tx = tx.Where("name LIKE ?", "%"+filter+"%")
+	}
 
-	return cat, tx.Find(&cat).Error
+	return cat, tx.Where("delete_time IS NULL").Find(&cat).Error
 }
 
 func (m *CatModel) BatchCreate(ctx context.Context, cat ...*cat.Cat) (int64, error) {
@@ -86,7 +87,7 @@ func (m *CatModel) BatchCreate(ctx context.Context, cat ...*cat.Cat) (int64, err
 
 func (m *CatModel) BatchGet(ctx context.Context, ids ...string) ([]*cat.Cat, error) {
 	var cat []*cat.Cat
-	return cat, m.DB.WithContext(ctx).Find(&cat, "id = ?", ids).Error
+	return cat, m.DB.WithContext(ctx).Find(&cat, ids).Error
 }
 
 func (m *CatModel) BatchDelete(ctx context.Context, ids ...string) (int64, error) {
