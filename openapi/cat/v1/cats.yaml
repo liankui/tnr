@@ -1,0 +1,229 @@
+components:
+  schemas:
+    cat.Cat:
+      description: cat info
+      properties:
+        area:
+          description: 地理范围
+          title: mojo.core.String
+          type: string
+        brithDay:
+          $ref: '#/components/schemas/mojo.core.Timestamp'
+        createTime:
+          $ref: '#/components/schemas/mojo.core.Timestamp'
+        deleteTime:
+          $ref: '#/components/schemas/mojo.core.Timestamp'
+        id:
+          title: mojo.core.String
+          type: string
+        lastFoundTime:
+          $ref: '#/components/schemas/mojo.core.Timestamp'
+        location:
+          description: 地理位置
+          title: mojo.core.String
+          type: string
+        name:
+          description: 名称
+          title: mojo.core.String
+          type: string
+        nickName:
+          description: 昵称
+          title: mojo.core.String
+          type: string
+        sex:
+          description: 性别, male(Tomcat), female(Queen)
+          title: mojo.core.String
+          type: string
+        state:
+          description: cat的物理或情感状态
+          title: mojo.core.String
+          type: string
+        status:
+          description: 状态, trap, neuter, return
+          title: mojo.core.String
+          type: string
+        updateTime:
+          $ref: '#/components/schemas/mojo.core.Timestamp'
+      title: cat.Cat
+      type: object
+    cat.FamilyTree:
+      description: ""
+      properties:
+        ancestor:
+          description: 祖先
+          items:
+            title: mojo.core.String
+            type: string
+          title: mojo.core.Array
+          type: array
+        catId:
+          title: mojo.core.String
+          type: string
+        child:
+          description: 子女
+          items:
+            title: mojo.core.String
+            type: string
+          title: mojo.core.Array
+          type: array
+        name:
+          description: 名称
+          title: mojo.core.String
+          type: string
+        nickName:
+          description: 昵称
+          title: mojo.core.String
+          type: string
+        parent:
+          description: 父母
+          items:
+            title: mojo.core.String
+            type: string
+          title: mojo.core.Array
+          type: array
+        sex:
+          description: 性别, male(Tomcat), female(Queen)
+          title: mojo.core.String
+          type: string
+        spouse:
+          description: 配偶
+          items:
+            title: mojo.core.String
+            type: string
+          title: mojo.core.Array
+          type: array
+      title: cat.FamilyTree
+      type: object
+    mojo.core.Timestamp:
+      description: ""
+      format: Timestamp
+      title: mojo.core.Timestamp
+      type: string
+info:
+  description: ""
+  version: "1.0"
+openapi: 3.0.3
+paths:
+  /tnr/v1/cats:
+    get:
+      description: ""
+      operationId: list_cats
+      parameters:
+      - in: query
+        name: page_size
+        schema:
+          format: Int32
+          title: mojo.core.Int32
+          type: integer
+      - in: query
+        name: page_token
+        schema:
+          title: mojo.core.String
+          type: string
+      - in: query
+        name: skip
+        schema:
+          format: Int32
+          title: mojo.core.Int32
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/cat.Cat'
+                title: mojo.core.Array
+                type: array
+          description: OK
+      summary: 查询cat列表
+    post:
+      description: ""
+      operationId: create_cat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cat.Cat'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cat.Cat'
+          description: OK
+      summary: 创建cat信息
+  /tnr/v1/cats/{cat_id}:
+    put:
+      description: ""
+      operationId: update_cat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cat.Cat'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cat.Cat'
+          description: OK
+      summary: 更新cat信息
+  /tnr/v1/cats/{id}:
+    delete:
+      description: ""
+      operationId: delete_cat
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: mojo.core.String
+          type: string
+      responses:
+        "200":
+          description: OK
+      summary: 删除cat信息
+    get:
+      description: ""
+      operationId: get_cat
+      parameters:
+      - in: path
+        name: id
+        schema:
+          title: mojo.core.String
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cat.Cat'
+          description: OK
+      summary: 查询cat信息
+  /tnr/v1/cats:batch-get:
+    get:
+      description: ""
+      operationId: batch_get_cat
+      parameters:
+      - in: query
+        name: ids
+        schema:
+          items:
+            title: mojo.core.String
+            type: string
+          title: mojo.core.Array
+          type: array
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/cat.Cat'
+                title: mojo.core.Array
+                type: array
+          description: OK
+      summary: 批量获取cat信息

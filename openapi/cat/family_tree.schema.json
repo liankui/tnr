@@ -1,0 +1,62 @@
+{
+    "title": "cat.FamilyTree",
+    "description": "",
+    "type": "object",
+    "properties": {
+        "ancestor": {
+            "title": "mojo.core.Array",
+            "description": "祖先",
+            "type": "array",
+            "items": {
+                "title": "mojo.core.String",
+                "type": "string"
+            }
+        },
+        "catId": {
+            "title": "mojo.core.String",
+            "type": "string"
+        },
+        "child": {
+            "title": "mojo.core.Array",
+            "description": "子女",
+            "type": "array",
+            "items": {
+                "title": "mojo.core.String",
+                "type": "string"
+            }
+        },
+        "name": {
+            "title": "mojo.core.String",
+            "description": "名称",
+            "type": "string"
+        },
+        "nickName": {
+            "title": "mojo.core.String",
+            "description": "昵称",
+            "type": "string"
+        },
+        "parent": {
+            "title": "mojo.core.Array",
+            "description": "父母",
+            "type": "array",
+            "items": {
+                "title": "mojo.core.String",
+                "type": "string"
+            }
+        },
+        "sex": {
+            "title": "mojo.core.String",
+            "description": "性别, male(Tomcat), female(Queen)",
+            "type": "string"
+        },
+        "spouse": {
+            "title": "mojo.core.Array",
+            "description": "配偶",
+            "type": "array",
+            "items": {
+                "title": "mojo.core.String",
+                "type": "string"
+            }
+        }
+    }
+}

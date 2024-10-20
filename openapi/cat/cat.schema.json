@@ -1,0 +1,61 @@
+{
+    "title": "cat.Cat",
+    "description": "cat info",
+    "type": "object",
+    "properties": {
+        "area": {
+            "title": "mojo.core.String",
+            "description": "地理范围",
+            "type": "string"
+        },
+        "brithDay": {
+            "$ref": "#/components/schemas/mojo.core.Timestamp"
+        },
+        "createTime": {
+            "$ref": "#/components/schemas/mojo.core.Timestamp"
+        },
+        "deleteTime": {
+            "$ref": "#/components/schemas/mojo.core.Timestamp"
+        },
+        "id": {
+            "title": "mojo.core.String",
+            "type": "string"
+        },
+        "lastFoundTime": {
+            "$ref": "#/components/schemas/mojo.core.Timestamp"
+        },
+        "location": {
+            "title": "mojo.core.String",
+            "description": "地理位置",
+            "type": "string"
+        },
+        "name": {
+            "title": "mojo.core.String",
+            "description": "名称",
+            "type": "string"
+        },
+        "nickName": {
+            "title": "mojo.core.String",
+            "description": "昵称",
+            "type": "string"
+        },
+        "sex": {
+            "title": "mojo.core.String",
+            "description": "性别, male(Tomcat), female(Queen)",
+            "type": "string"
+        },
+        "state": {
+            "title": "mojo.core.String",
+            "description": "cat的物理或情感状态",
+            "type": "string"
+        },
+        "status": {
+            "title": "mojo.core.String",
+            "description": "状态, trap, neuter, return",
+            "type": "string"
+        },
+        "updateTime": {
+            "$ref": "#/components/schemas/mojo.core.Timestamp"
+        }
+    }
+}

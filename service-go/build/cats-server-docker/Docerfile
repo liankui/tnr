@@ -1,0 +1,6 @@
+FROM alpine:3.18.4
+
+ADD v1-cats-server /v1-cats-server
+
+WORKDIR /
+ENTRYPOINT [ "/v1-cats-server" ]

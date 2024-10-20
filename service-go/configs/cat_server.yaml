@@ -1,0 +1,4 @@
+catServer:
+  httpAddr: :21201
+  grpcAddr: :21202
+  debugAddr: :21203
