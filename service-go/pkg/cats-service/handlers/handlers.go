@@ -49,16 +49,6 @@ func (s catsServer) CreateCat(ctx context.Context, in *pb.CreateCatRequest) (*ca
 
 	resp := &cat.Cat{
 		Id: in.Cat.Id,
-		// Name:
-		// NickName:
-		// Sex:
-		// Location:
-		// Area:
-		// Status:
-		// State:
-		// CreateTime:
-		// UpdateTime:
-		// DeleteTime:
 	}
 	return resp, nil
 }
@@ -83,16 +73,6 @@ func (s catsServer) UpdateCat(ctx context.Context, in *pb.UpdateCatRequest) (*ca
 
 	resp := &cat.Cat{
 		Id: in.Cat.Id,
-		// Name:
-		// NickName:
-		// Sex:
-		// Location:
-		// Area:
-		// Status:
-		// State:
-		// CreateTime:
-		// UpdateTime:
-		// DeleteTime:
 	}
 	return resp, nil
 }
