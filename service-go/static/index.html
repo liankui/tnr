@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猫咪管理系统</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>猫咪管理系统</h1>
+        <button class="btn" onclick="showAddCatModal()">添加猫咪</button>
+    </div>
+
+    <div class="cat-list" id="catList">
+        <!-- 猫咪卡片将通过JavaScript动态添加 -->
+    </div>
+
+    <!-- 添加/编辑猫咪的模态框 -->
+    <div id="catModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">添加猫咪</h2>
+            <form id="catForm">
+                <div class="form-group">
+                    <label for="name">名称</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="nickName">昵称</label>
+                    <input type="text" id="nickName">
+                </div>
+                <div class="form-group">
+                    <label for="sex">性别</label>
+                    <select id="sex" required>
+                        <option value="male">公猫(Tomcat)</option>
+                        <option value="female">母猫(Queen)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="status">状态</label>
+                    <select id="status" required>
+                        <option value="trap">已捕获</option>
+                        <option value="neuter">已绝育</option>
+                        <option value="return">已放归</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="area">地理范围</label>
+                    <input type="text" id="area">
+                </div>
+                <div class="form-group">
+                    <label for="location">具体位置</label>
+                    <input type="text" id="location">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn">保存</button>
+                    <button type="button" class="btn" onclick="closeModal()" style="background-color: #f44336;">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
